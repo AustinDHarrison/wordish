@@ -144,17 +144,19 @@
         </div>
     </div>
     <script>
-        const response = await fetch('http://wordish.austindharrison.com/word.json', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
+        fetch('https://wordish.austindharrison.com/word.json')
+            .then(response => response.json())
+            .then(data => {
+                if (data && data.word) {
+                    window.correctWord = data.word.toUpperCase();
                 }
+            })
+            .catch(() => {
+                window.correctWord = "TESTS";
             });
-        const data = await response.json();
         let currentRow = 0;
         let currentCol = 0;
         const currentWord = []
-        const correctWord = data.word.toUpperCase()
         let correctAmount = 0
         async function keyboard(letter, element) {
             console.log("Pressed:", letter);
